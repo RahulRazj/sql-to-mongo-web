@@ -9,7 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent],
-  imports: [BrowserModule, NgbModule, AppRoutingModule],
+  imports: [BrowserModule, NgbModule, AppRoutingModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
