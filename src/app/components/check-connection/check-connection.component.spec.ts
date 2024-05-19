@@ -8,7 +8,7 @@ describe('CheckConnectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CheckConnectionComponent]
+      declarations: [CheckConnectionComponent]
     })
     .compileComponents();
     
