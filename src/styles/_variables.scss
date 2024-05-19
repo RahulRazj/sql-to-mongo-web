@@ -1,0 +1,57 @@
+$bgColor_light: #F6F5F5;
+$bgColor_dark: #222831;
+
+$fillColor_light: #222831;
+$fillColor_dark: white;
+
+$textColor_light: #222831;
+$textColor_dark: white;
+
+$secondaryTextColor_light: #5e5e5e;
+$secondaryTextColor_dark: #C7C8CC;
+
+$borderColor_light: #222831;
+$borderColor_dark: white;
+
+$primaryColor_light: #e65c19;
+$primaryColor_dark: #e65c19;
+
+$secondaryColor_light: #0A6847;
+$secondaryColor_dark: #095B3E;
+
+$inputTextArea_light: #EEEDEB;
+$inputTextArea_dark: #1A1E25;
+
+$inputTextColor_light: #222831;
+$inputTextColor_dark: white;
+
+$inputHintColor_light: #5e5e5e;
+$inputHintColor_dark: #C7C8CC;
+
+// mixin that enables css variables in light mode
+@mixin lighten() {
+  --bgColor: #{$bgColor_light};
+  --textColor: #{$textColor_light};
+  --borderColor: #{$borderColor_light};
+  --primaryColor: #{$primaryColor_light};
+  --secondaryColor: #{$secondaryColor_light};
+  --secondaryTextColor: #{$secondaryTextColor_light};
+  --fillColor: #{$fillColor_light};
+  --inputTextArea: #{$inputTextArea_light};
+  --inputColor: #{$inputTextColor_light};
+  --inputHintColor: #{$inputHintColor_light};
+}
+
+// mixin that enables css variables in dark mode
+@mixin darken() {
+  --bgColor: #{$bgColor_dark};
+  --textColor: #{$textColor_dark};
+  --borderColor: #{$borderColor_dark};
+  --primaryColor: #{$primaryColor_dark};
+  --secondaryColor: #{$secondaryColor_dark};
+  --secondaryTextColor: #{$secondaryTextColor_dark};
+  --fillColor: #{$fillColor_dark};
+  --inputTextArea: #{$inputTextArea_dark};
+  --inputColor: #{$inputTextColor_dark};
+  --inputHintColor: #{$inputHintColor_dark};
+}
