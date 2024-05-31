@@ -6,14 +6,15 @@
 .main-content {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 }
 
 .left-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 50%;
+  align-items: left;
+  width: 45%;
   height: 88.8vh;
   float: left;
   border-right: 1px solid var(--borderColor);
@@ -26,7 +27,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 55%;
   float: right;
 }
 
@@ -40,7 +41,6 @@
 }
 
 .check-connection-form {
-  //   margin: 36px;
   gap: 16px;
 }
 
@@ -52,11 +52,11 @@
 }
 
 .db-name-input {
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .connection-submit-btn {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   width: 100%;
   max-width: 40vw;
   background-color: var(--secondaryColor);
@@ -64,7 +64,7 @@
 }
 
 .action-btn {
-  color: #c7c8cc;
+  // color: #c7c8cc;
   border-color: var(--borderColor);
   transition: background-color $themeTransitionTime ease;
 }
@@ -103,4 +103,9 @@ input::placeholder {
 
 .credential-input {
   width: 300px;
+}
+
+.required-input:after {
+  content: ' *';
+  color: red;
 }

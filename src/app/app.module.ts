@@ -8,11 +8,12 @@ import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CheckConnectionComponent } from './components/check-connection/check-connection.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, HeaderComponent, CheckConnectionComponent],
-  imports: [BrowserModule, NgbModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [BrowserModule, NgbModule, ReactiveFormsModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
