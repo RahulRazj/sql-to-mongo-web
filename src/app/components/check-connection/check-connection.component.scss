@@ -102,7 +102,19 @@ input::placeholder {
 }
 
 .credential-input {
-  width: 300px;
+  width: 260px;
+}
+
+.proceed-action-btn {
+  width: 100%;
+  max-width: 40vw;
+}
+
+.proceed-msg {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  color: var(--textColor);
 }
 
 .required-input:after {

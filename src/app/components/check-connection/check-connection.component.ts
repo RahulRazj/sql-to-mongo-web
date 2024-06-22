@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { API_SUCCESS_RESPONSE, DB_CONNECTION, connectionResponse } from '../../../models/constants';
+import { API_SUCCESS_RESPONSE, ConnectionInfo, DB_CONNECTION, connectionResponse } from '../../../models/constants';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -13,6 +13,17 @@ export class CheckConnectionComponent {
   isFormSubmitted = false;
   sqlConnectionCheck = false;
   mongoConnectionCheck = false;
+  passwordHidden = true;
+
+  connectionInfo: ConnectionInfo = {
+    sql: {
+      sqlServer: '',
+      sqlServerUsername: '',
+      sqlServerPassword: '',
+      sqlServerDatabaseName: ''
+    },
+    mongo: ''
+  };
 
   connectionResponse: connectionResponse = {
     sql: {
@@ -39,7 +50,6 @@ export class CheckConnectionComponent {
       sqlServerUsername: new FormControl('', [Validators.required]),
       sqlServerPassword: new FormControl('', [Validators.required]),
       sqlServerDatabaseName: new FormControl('', [Validators.required]),
-      sqlConnectionString: new FormControl('', [Validators.required]),
       mongoConnectionString: new FormControl('', [Validators.required])
     });
   }
@@ -83,6 +93,7 @@ export class CheckConnectionComponent {
       this.connectionResponse.sql.successMsg = response.data.message;
       this.connectionResponse.sql.connected = true;
 
+      this.connectionInfo.sql = sqlConfig;
     } catch (error: any) {
       this.connectionResponse.sql.response = error.error?.status || 'ERROR';
       this.connectionResponse.sql.errorMsg = error.error?.message || 'SQL connection failed.';
@@ -107,7 +118,7 @@ export class CheckConnectionComponent {
       this.connectionResponse.mongo.successMsg = response.data.message;
       this.connectionResponse.mongo.connected = true;
 
-      console.log('response', response);
+      this.connectionInfo.mongo = mongoConnectionString;
     } catch (error: any) {
       this.connectionResponse.mongo.response = error.error?.status || 'ERROR';
       this.connectionResponse.mongo.errorMsg = error.error?.message || 'Mongo connection failed.';
@@ -152,9 +163,18 @@ export class CheckConnectionComponent {
     }
   }
 
+  togglePasswordVisibility() {
+    this.passwordHidden = !this.passwordHidden;
+  }
+
   onSubmit() {
     const isFormValid = this.connectionForm.valid;
-    console.log('valid', this.connectionForm.controls['sqlConnectionString'].invalid);
     this.isFormSubmitted = true;
+
+    if (!isFormValid) {
+      return;
+    }
+
+    localStorage.setItem('connectionInfo', JSON.stringify(this.connectionInfo));
   }
 }

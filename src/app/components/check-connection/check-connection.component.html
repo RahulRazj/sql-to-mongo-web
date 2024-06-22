@@ -15,6 +15,7 @@
             <label for="sqlServerInput" class="form-label conn-label-text required-input">Sql Server</label>
             <input
               required
+              autocomplete="off"
               (input)="onConnectionStringChange('sql')"
               placeholder="Sql Server"
               type="text"
@@ -43,6 +44,7 @@
                 <label for="sqlUserInput" class="form-label conn-label-text required-input">Username</label>
                 <input
                   required
+                  autocomplete="off"
                   (input)="onConnectionStringChange('sql')"
                   placeholder="Username"
                   type="text"
@@ -69,16 +71,24 @@
 
               <div class="password-input">
                 <label for="sqlPasswordInput" class="form-label conn-label-text required-input">Password</label>
-                <input
-                  required
-                  (input)="onConnectionStringChange('sql')"
-                  placeholder="Password"
-                  type="password"
-                  class="form-control credential-input"
-                  id="sqlPasswordInput"
-                  aria-describedby="sqlPasswordInput"
-                  formControlName="sqlServerPassword"
-                />
+                <div class="show-password-eye d-flex gap-2">
+                  <input
+                    autocomplete="off"
+                    required
+                    (input)="onConnectionStringChange('sql')"
+                    placeholder="Password"
+                    [type]="passwordHidden ? 'password' : 'text'"
+                    class="form-control credential-input"
+                    id="sqlPasswordInput"
+                    aria-describedby="sqlPasswordInput"
+                    formControlName="sqlServerPassword"
+                  />
+                  <i
+                    (click)="togglePasswordVisibility()"
+                    class="bi d-flex justify-content-center align-items-center"
+                    [ngClass]="passwordHidden ? 'bi-eye' : 'bi-eye-slash'"
+                  ></i>
+                </div>
                 <div
                   class="text-danger"
                   *ngIf="
@@ -100,6 +110,7 @@
               <label for="sqlDatabaseNameInput" class="form-label conn-label-text required-input">Database name</label>
               <div class="db-input">
                 <input
+                  autocomplete="off"
                   required
                   (input)="onConnectionStringChange('sql')"
                   placeholder="Database name"
@@ -143,6 +154,7 @@
             >
             <div class="db-input">
               <input
+                autocomplete="off"
                 (input)="onConnectionStringChange('mongo')"
                 required
                 placeholder="Mongo connection string"
@@ -181,15 +193,20 @@
           </div>
         </form>
       </div>
-      <button
-        [disabled]="!connectionResponse.sql.connected || !connectionResponse.mongo.connected"
-        type="submit"
-        form="checkConnectionForm"
-        (click)="onSubmit()"
-        class="btn btn-success connection-submit-btn"
-      >
-        Proceed
-      </button>
+      <div class="proceed-action-btn">
+        <p class="feedback-msg proceed-msg">
+          <span><i class="bi bi-info-circle"></i></span> Please check both Sql and Mongo connection to proceed.
+        </p>
+        <button
+          [disabled]="!connectionResponse.sql.connected || !connectionResponse.mongo.connected"
+          type="submit"
+          form="checkConnectionForm"
+          (click)="onSubmit()"
+          class="btn btn-success connection-submit-btn"
+        >
+          Proceed
+        </button>
+      </div>
     </div>
   </div>
 </div>
