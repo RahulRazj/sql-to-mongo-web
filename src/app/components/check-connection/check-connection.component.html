@@ -1,16 +1,22 @@
 <div class="connection-container">
   <div class="main-content">
-    <div class="left-content get-started-info">
+    <div class="left-content">
       <h2 class="info-text">Let's get started</h2>
+      <p class="get-started-points">
+        <span class="points-heading">Connect & Verify:</span>Connect to your SQL database and MongoDB collection, and
+        verify connections.
+      </p>
     </div>
     <div class="right-content">
       <h4 class="info-text check-connection-guide">Let's check the connection & access to the databases</h4>
       <div class="check-connection-form">
         <form class="conn-form needs-validation" [formGroup]="connectionForm">
           <div class="sql-connection">
-            <label for="sqlServerInput" class="form-label conn-label-text">Sql Server</label>
+            <label for="sqlServerInput" class="form-label conn-label-text required-input">Sql Server</label>
             <input
               required
+              autocomplete="off"
+              (input)="onConnectionStringChange('sql')"
               placeholder="Sql Server"
               type="text"
               class="form-control"
@@ -35,9 +41,11 @@
 
             <div class="sql-credential-input d-flex justify-content-between pt-2">
               <div class="username-input">
-                <label for="sqlUserInput" class="form-label conn-label-text">Username</label>
+                <label for="sqlUserInput" class="form-label conn-label-text required-input">Username</label>
                 <input
                   required
+                  autocomplete="off"
+                  (input)="onConnectionStringChange('sql')"
                   placeholder="Username"
                   type="text"
                   class="form-control credential-input"
@@ -62,16 +70,25 @@
               </div>
 
               <div class="password-input">
-                <label for="sqlPasswordInput" class="form-label conn-label-text">Password</label>
-                <input
-                  required
-                  placeholder="Password"
-                  type="password"
-                  class="form-control credential-input"
-                  id="sqlPasswordInput"
-                  aria-describedby="sqlPasswordInput"
-                  formControlName="sqlServerPassword"
-                />
+                <label for="sqlPasswordInput" class="form-label conn-label-text required-input">Password</label>
+                <div class="show-password-eye d-flex gap-2">
+                  <input
+                    autocomplete="off"
+                    required
+                    (input)="onConnectionStringChange('sql')"
+                    placeholder="Password"
+                    [type]="passwordHidden ? 'password' : 'text'"
+                    class="form-control credential-input"
+                    id="sqlPasswordInput"
+                    aria-describedby="sqlPasswordInput"
+                    formControlName="sqlServerPassword"
+                  />
+                  <i
+                    (click)="togglePasswordVisibility()"
+                    class="bi d-flex justify-content-center align-items-center"
+                    [ngClass]="passwordHidden ? 'bi-eye' : 'bi-eye-slash'"
+                  ></i>
+                </div>
                 <div
                   class="text-danger"
                   *ngIf="
@@ -90,10 +107,12 @@
             </div>
 
             <div class="database-name-input pt-2">
-              <label for="sqlDatabaseNameInput" class="form-label conn-label-text">Database name</label>
+              <label for="sqlDatabaseNameInput" class="form-label conn-label-text required-input">Database name</label>
               <div class="db-input">
                 <input
+                  autocomplete="off"
                   required
+                  (input)="onConnectionStringChange('sql')"
                   placeholder="Database name"
                   type="text"
                   class="form-control db-name-input"
@@ -101,7 +120,7 @@
                   aria-describedby="sqlDatabaseNameInput"
                   formControlName="sqlServerDatabaseName"
                 />
-                <button (click)="checkConnection('sql')" class="btn btn-light action-btn">Check connection</button>
+                <button (click)="onCheckConnection('sql')" class="btn btn-light action-btn">Check connection</button>
               </div>
               <div
                 class="text-danger"
@@ -117,12 +136,26 @@
                   >Database name is required.</span
                 >
               </div>
+              <div class="text-danger" *ngIf="sqlConnectionCheck">
+                <span class="feedback-msg" *ngIf="connectionResponse.sql.response === 'ERROR'">{{
+                  connectionResponse.sql.errorMsg
+                }}</span>
+              </div>
+              <div class="text-success" *ngIf="sqlConnectionCheck">
+                <span class="feedback-msg" *ngIf="connectionResponse.sql.response === 'SUCCESS'">{{
+                  connectionResponse.sql.successMsg
+                }}</span>
+              </div>
             </div>
           </div>
           <div class="mongo-connection">
-            <label for="mongoConnectionInput" class="form-label conn-label-text">Check Mongo connection</label>
+            <label for="mongoConnectionInput" class="form-label conn-label-text required-input"
+              >Check Mongo connection</label
+            >
             <div class="db-input">
               <input
+                autocomplete="off"
+                (input)="onConnectionStringChange('mongo')"
                 required
                 placeholder="Mongo connection string"
                 type="text"
@@ -131,7 +164,7 @@
                 aria-describedby="mongoConnectionInput"
                 formControlName="mongoConnectionString"
               />
-              <button (click)="checkConnection('mongo')" class="btn btn-light action-btn">Check connection</button>
+              <button (click)="onCheckConnection('mongo')" class="btn btn-light action-btn">Check connection</button>
             </div>
             <div
               class="text-danger"
@@ -147,18 +180,33 @@
                 >This is required to check the connection</span
               >
             </div>
+            <div class="text-danger" *ngIf="mongoConnectionCheck">
+              <span class="feedback-msg" *ngIf="connectionResponse.mongo.response === 'ERROR'">{{
+                connectionResponse.mongo.errorMsg
+              }}</span>
+            </div>
+            <div class="text-success" *ngIf="mongoConnectionCheck">
+              <span class="feedback-msg" *ngIf="connectionResponse.mongo.response === 'SUCCESS'">{{
+                connectionResponse.mongo.successMsg
+              }}</span>
+            </div>
           </div>
         </form>
       </div>
-      <button
-        [disabled]="!isSqlConnected || !isMongoConnected"
-        type="submit"
-        form="checkConnectionForm"
-        (click)="onSubmit()"
-        class="btn btn-success connection-submit-btn"
-      >
-        Proceed
-      </button>
+      <div class="proceed-action-btn">
+        <p class="feedback-msg proceed-msg">
+          <span><i class="bi bi-info-circle"></i></span> Please check both Sql and Mongo connection to proceed.
+        </p>
+        <button
+          [disabled]="!connectionResponse.sql.connected || !connectionResponse.mongo.connected"
+          type="submit"
+          form="checkConnectionForm"
+          (click)="onSubmit()"
+          class="btn btn-success connection-submit-btn"
+        >
+          Proceed
+        </button>
+      </div>
     </div>
   </div>
 </div>
