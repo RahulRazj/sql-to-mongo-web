@@ -14,6 +14,8 @@ export class CheckConnectionComponent {
   sqlConnectionCheck = false;
   mongoConnectionCheck = false;
   passwordHidden = true;
+  sqlConnectionChecking = false;
+  mongoConnectionChecking = false;
 
   connectionInfo: ConnectionInfo = {
     sql: {
@@ -55,8 +57,7 @@ export class CheckConnectionComponent {
   }
 
   onCheckConnection(dbConnectionType: string) {
-    dbConnectionType = dbConnectionType as DB_CONNECTION;
-
+    this.resetConnectionResponse(dbConnectionType);
     switch (dbConnectionType) {
       case DB_CONNECTION.SQL:
         this.checkSqlConnection();
@@ -79,6 +80,8 @@ export class CheckConnectionComponent {
       return;
     }
 
+    this.sqlConnectionChecking = true;
+
     const sqlConfig = {
       sqlServer: this.connectionForm.controls['sqlServer'].value,
       sqlServerUsername: this.connectionForm.controls['sqlServerUsername'].value,
@@ -94,9 +97,11 @@ export class CheckConnectionComponent {
       this.connectionResponse.sql.connected = true;
 
       this.connectionInfo.sql = sqlConfig;
+      this.sqlConnectionChecking = false;
     } catch (error: any) {
       this.connectionResponse.sql.response = error.error?.status || 'ERROR';
       this.connectionResponse.sql.errorMsg = error.error?.message || 'SQL connection failed.';
+      this.sqlConnectionChecking = false;
 
       console.log('error', error);
     }
@@ -110,6 +115,8 @@ export class CheckConnectionComponent {
       return;
     }
 
+    this.mongoConnectionChecking = true;
+
     const mongoConnectionString = this.connectionForm.controls['mongoConnectionString'].value;
     try {
       const response = (await this.service.checkMongoConnection(mongoConnectionString)) as API_SUCCESS_RESPONSE;
@@ -119,17 +126,17 @@ export class CheckConnectionComponent {
       this.connectionResponse.mongo.connected = true;
 
       this.connectionInfo.mongo = mongoConnectionString;
+      this.mongoConnectionChecking = false;
     } catch (error: any) {
       this.connectionResponse.mongo.response = error.error?.status || 'ERROR';
       this.connectionResponse.mongo.errorMsg = error.error?.message || 'Mongo connection failed.';
+      this.mongoConnectionChecking = false;
 
       console.log('error', error);
     }
   }
 
   onConnectionStringChange(dbConnectionType: string) {
-    dbConnectionType = dbConnectionType as DB_CONNECTION;
-
     switch (dbConnectionType) {
       case DB_CONNECTION.SQL:
         this.sqlConnectionCheck = false;
@@ -141,8 +148,6 @@ export class CheckConnectionComponent {
   }
 
   resetConnectionResponse(dbConnectionType: string) {
-    dbConnectionType = dbConnectionType as DB_CONNECTION;
-
     switch (dbConnectionType) {
       case DB_CONNECTION.SQL:
         this.connectionResponse.sql = {
