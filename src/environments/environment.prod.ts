@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  apiBaseUrl: 'http://localhost:5600',
+  apiBaseUrl: 'https://data-api.up.railway.app'
 };
