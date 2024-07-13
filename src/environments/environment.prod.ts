@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  apiBaseUrl: 'https://data-api.up.railway.app'
+  apiBaseUrl: 'https://sqltomongo.up.railway.app'
 };
