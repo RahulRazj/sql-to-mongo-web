@@ -1,0 +1,218 @@
+<div class="connection-container">
+  <div class="main-content">
+    <div class="left-content">
+      <h2 class="info-text">Let's get started</h2>
+      <p class="get-started-points">
+        <span class="points-heading">Connect & Verify:</span>Connect to your SQL database and MongoDB collection, and
+        verify connections.
+      </p>
+    </div>
+    <div class="right-content">
+      <h4 class="info-text check-connection-guide">Let's check the connection & access to the databases</h4>
+      <div class="check-connection-form">
+        <form class="conn-form needs-validation" [formGroup]="connectionForm">
+          <div class="sql-connection">
+            <label for="sqlServerInput" class="form-label conn-label-text required-input">Sql Server</label>
+            <input
+              required
+              autocomplete="off"
+              (input)="onConnectionStringChange('sql')"
+              placeholder="Sql Server"
+              type="text"
+              class="form-control"
+              id="sqlServerInput"
+              aria-describedby="sqlServer"
+              formControlName="sqlServer"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                connectionForm.controls['sqlServer'].invalid &&
+                (isFormSubmitted ||
+                  sqlConnectionCheck ||
+                  connectionForm.controls['sqlServer'].touched ||
+                  connectionForm.controls['sqlServer'].dirty)
+              "
+            >
+              <span class="feedback-msg" *ngIf="connectionForm.controls['sqlServer'].errors?.['required']"
+                >This is required to check the connection.</span
+              >
+            </div>
+
+            <div class="sql-credential-input d-flex justify-content-between pt-2">
+              <div class="username-input">
+                <label for="sqlUserInput" class="form-label conn-label-text required-input">Username</label>
+                <input
+                  required
+                  autocomplete="off"
+                  (input)="onConnectionStringChange('sql')"
+                  placeholder="Username"
+                  type="text"
+                  class="form-control credential-input"
+                  id="sqlUserInput"
+                  aria-describedby="sqlServerUsername"
+                  formControlName="sqlServerUsername"
+                />
+                <div
+                  class="text-danger"
+                  *ngIf="
+                    connectionForm.controls['sqlServerUsername'].invalid &&
+                    (isFormSubmitted ||
+                      sqlConnectionCheck ||
+                      connectionForm.controls['sqlServerUsername'].touched ||
+                      connectionForm.controls['sqlServerUsername'].dirty)
+                  "
+                >
+                  <span class="feedback-msg" *ngIf="connectionForm.controls['sqlServerUsername'].errors?.['required']"
+                    >Username is required.</span
+                  >
+                </div>
+              </div>
+
+              <div class="password-input">
+                <label for="sqlPasswordInput" class="form-label conn-label-text required-input">Password</label>
+                <div class="show-password-eye d-flex gap-2">
+                  <input
+                    autocomplete="off"
+                    required
+                    (input)="onConnectionStringChange('sql')"
+                    placeholder="Password"
+                    [type]="passwordHidden ? 'password' : 'text'"
+                    class="form-control credential-input"
+                    id="sqlPasswordInput"
+                    aria-describedby="sqlPasswordInput"
+                    formControlName="sqlServerPassword"
+                  />
+                  <i
+                    (click)="togglePasswordVisibility()"
+                    class="bi d-flex justify-content-center align-items-center"
+                    [ngClass]="passwordHidden ? 'bi-eye-slash' : 'bi-eye'"
+                  ></i>
+                </div>
+                <div
+                  class="text-danger"
+                  *ngIf="
+                    connectionForm.controls['sqlServerPassword'].invalid &&
+                    (isFormSubmitted ||
+                      sqlConnectionCheck ||
+                      connectionForm.controls['sqlServerPassword'].touched ||
+                      connectionForm.controls['sqlServerPassword'].dirty)
+                  "
+                >
+                  <span class="feedback-msg" *ngIf="connectionForm.controls['sqlServerPassword'].errors?.['required']"
+                    >Password is required.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="database-name-input pt-2">
+              <label for="sqlDatabaseNameInput" class="form-label conn-label-text required-input">Database name</label>
+              <div class="db-input">
+                <input
+                  autocomplete="off"
+                  required
+                  (input)="onConnectionStringChange('sql')"
+                  placeholder="Database name"
+                  type="text"
+                  class="form-control db-name-input"
+                  id="sqlDatabaseNameInput"
+                  aria-describedby="sqlDatabaseNameInput"
+                  formControlName="sqlServerDatabaseName"
+                />
+                <button (click)="onCheckConnection('sql')" class="btn btn-light action-btn" [disabled]="sqlConnectionChecking">
+                  {{sqlConnectionChecking ? 'Connecting...' : 'Check connection'}}
+                  <span *ngIf="sqlConnectionChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  connectionForm.controls['sqlServerDatabaseName'].invalid &&
+                  (isFormSubmitted ||
+                    sqlConnectionCheck ||
+                    connectionForm.controls['sqlServerDatabaseName'].touched ||
+                    connectionForm.controls['sqlServerDatabaseName'].dirty)
+                "
+              >
+                <span class="feedback-msg" *ngIf="connectionForm.controls['sqlServerDatabaseName'].errors?.['required']"
+                  >Database name is required.</span
+                >
+              </div>
+              <div class="text-danger" *ngIf="sqlConnectionCheck">
+                <span class="feedback-msg" *ngIf="connectionResponse.sql.response === 'ERROR'">{{
+                  connectionResponse.sql.errorMsg
+                }}</span>
+              </div>
+              <div class="text-success" *ngIf="sqlConnectionCheck">
+                <span class="feedback-msg" *ngIf="connectionResponse.sql.response === 'SUCCESS'">{{
+                  connectionResponse.sql.successMsg
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="mongo-connection">
+            <label for="mongoConnectionInput" class="form-label conn-label-text required-input"
+              >Check Mongo connection</label
+            >
+            <div class="db-input">
+              <input
+                autocomplete="off"
+                (input)="onConnectionStringChange('mongo')"
+                required
+                placeholder="Mongo connection string"
+                type="text"
+                class="form-control db-name-input"
+                id="mongoConnectionInput"
+                aria-describedby="mongoConnectionInput"
+                formControlName="mongoConnectionString"
+              />
+              <button (click)="onCheckConnection('mongo')" class="btn btn-light action-btn" [disabled]="mongoConnectionChecking">
+                {{mongoConnectionChecking ? 'Connecting...' : 'Check connection'}}
+                <span *ngIf="mongoConnectionChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div
+              class="text-danger"
+              *ngIf="
+                connectionForm.controls['mongoConnectionString'].invalid &&
+                (isFormSubmitted ||
+                  mongoConnectionCheck ||
+                  connectionForm.controls['mongoConnectionString'].touched ||
+                  connectionForm.controls['mongoConnectionString'].dirty)
+              "
+            >
+              <span class="feedback-msg" *ngIf="connectionForm.controls['mongoConnectionString'].errors?.['required']"
+                >This is required to check the connection</span
+              >
+            </div>
+            <div class="text-danger" *ngIf="mongoConnectionCheck">
+              <span class="feedback-msg" *ngIf="connectionResponse.mongo.response === 'ERROR'">{{
+                connectionResponse.mongo.errorMsg
+              }}</span>
+            </div>
+            <div class="text-success" *ngIf="mongoConnectionCheck">
+              <span class="feedback-msg" *ngIf="connectionResponse.mongo.response === 'SUCCESS'">{{
+                connectionResponse.mongo.successMsg
+              }}</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="proceed-action-btn">
+        <p class="feedback-msg proceed-msg">
+          <span><i class="bi bi-info-circle"></i></span> Please check both Sql and Mongo connection to proceed.
+        </p>
+        <button
+          [disabled]="!connectionResponse.sql.connected || !connectionResponse.mongo.connected"
+          type="submit"
+          form="checkConnectionForm"
+          (click)="onSubmit()"
+          class="btn btn-success connection-submit-btn"
+        >
+          Proceed
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
