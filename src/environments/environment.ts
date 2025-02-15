@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
 
-  apiBaseUrl: 'https://data-api.up.railway.app'
+  apiBaseUrl: 'https://sql-to-mongo.onrender.com'
 };
