@@ -14,7 +14,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: left;
-  width: 45%;
+  width: 40%;
   height: 88.8vh;
   float: left;
   border-right: 1px solid var(--borderColor);
@@ -27,16 +27,18 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 55%;
+  width: 60%;
   float: right;
 }
 
 .info-text {
   text-align: center;
+  color: var(--textColor);
+  transition: color $themeTransitionTime ease;
 }
 
 .check-connection-guide {
-  max-width: 460px;
+  max-width: 480px;
   padding-top: 24px;
 }
 
@@ -52,30 +54,29 @@
 }
 
 .db-name-input {
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .connection-submit-btn {
   margin-bottom: 24px;
   width: 100%;
-  max-width: 40vw;
+  max-width: 45vw;
   background-color: var(--secondaryColor);
-  transition: background-color $themeTransitionTime ease;
+  transition: background-color $themeTransitionTime ease, color $themeTransitionTime ease;
 }
 
 .action-btn {
-  // color: #c7c8cc;
   border-color: var(--borderColor);
-  transition: background-color $themeTransitionTime ease;
+  transition: border-color $themeTransitionTime ease, background-color $themeTransitionTime ease;
 }
 
 .conn-label-text {
   color: var(--textColor);
-  transition: background-color $themeTransitionTime ease;
+  transition: color $themeTransitionTime ease;
 }
 
 .conn-form {
-  width: 40vw;
+  width: 45vw;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -93,7 +94,7 @@ textarea {
 
 input::placeholder {
   color: var(--inputHintColor);
-  transition: background-color $themeTransitionTime ease;
+  transition: color $themeTransitionTime ease;
 }
 
 .feedback-msg {
@@ -102,22 +103,95 @@ input::placeholder {
 }
 
 .credential-input {
-  width: 260px;
+  width: 300px;
 }
 
 .proceed-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  max-width: 40vw;
+  max-width: 50vw;
 }
 
 .proceed-msg {
-  display: flex;
   gap: 4px;
   width: 100%;
   color: var(--textColor);
+  transition: color $themeTransitionTime ease;
 }
 
 .required-input:after {
   content: ' *';
   color: red;
 }
+
+.left-content {
+  width: 40%;
+  padding: 20px;
+  color: var(--primaryTextColor);
+
+  .info-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--textColor);
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 1rem;
+    color: var(--secondaryTextColor);
+    margin-bottom: 20px;
+  }
+
+  .connection-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: var(--primaryTextColor);
+        margin: 0;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+
+  .help-text {
+    font-size: 0.9rem;
+    color:var(--secondaryTextColor);
+    text-align: center;
+
+    a {
+      color: #f8b400;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+

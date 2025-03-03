@@ -1,12 +1,41 @@
 <div class="connection-container">
   <div class="main-content">
     <div class="left-content">
-      <h2 class="info-text">Let's get started</h2>
-      <p class="get-started-points">
-        <span class="points-heading">Connect & Verify:</span>Connect to your SQL database and MongoDB collection, and
-        verify connections.
-      </p>
+  <h2 class="info-text">🚀 Welcome to Database Connection Setup!</h2>
+  <p class="description">
+    Get started by securely connecting your <strong>SQL</strong> and <strong>MongoDB</strong> databases.
+    Our system will verify the connection and ensure everything is properly configured.
+  </p>
+
+  <div class="connection-benefits">
+    <div class="benefit-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="2"/>
+        <path d="M7 12l3 3 6-6" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p><strong>Stable Connection:</strong> Ensure seamless data flow.</p>
     </div>
+    <div class="benefit-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="#FF9800" stroke-width="2"/>
+        <path d="M12 8v4l2 2" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p><strong>Real-time Feedback:</strong> Get instant connection status.</p>
+    </div>
+    <div class="benefit-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="#2196F3" stroke-width="2"/>
+        <path d="M9 12l2 2 4-4" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p><strong>Secure Access:</strong> Verify credentials before proceeding.</p>
+    </div>
+  </div>
+
+  <p class="help-text">
+    💡 <strong>Need Help?</strong> Check our <a href="#">documentation</a> for troubleshooting tips.
+  </p>
+</div>
+
     <div class="right-content">
       <h4 class="info-text check-connection-guide">Let's check the connection & access to the databases</h4>
       <div class="check-connection-form">
@@ -120,7 +149,7 @@
                   aria-describedby="sqlDatabaseNameInput"
                   formControlName="sqlServerDatabaseName"
                 />
-                <button (click)="onCheckConnection('sql')" class="btn btn-light action-btn" [disabled]="sqlConnectionChecking">
+                <button (click)="onCheckConnection('sql')" class="btn btn-warning action-btn" [disabled]="sqlConnectionChecking">
                   {{sqlConnectionChecking ? 'Connecting...' : 'Check connection'}}
                   <span *ngIf="sqlConnectionChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 </button>
@@ -167,7 +196,7 @@
                 aria-describedby="mongoConnectionInput"
                 formControlName="mongoConnectionString"
               />
-              <button (click)="onCheckConnection('mongo')" class="btn btn-light action-btn" [disabled]="mongoConnectionChecking">
+              <button (click)="onCheckConnection('mongo')" class="btn btn-warning action-btn" [disabled]="mongoConnectionChecking">
                 {{mongoConnectionChecking ? 'Connecting...' : 'Check connection'}}
                 <span *ngIf="mongoConnectionChecking" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               </button>

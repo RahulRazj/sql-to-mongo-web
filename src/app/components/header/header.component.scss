@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 
 .header-navbar {
-  padding: 16px 240px;
+  padding: 8px 240px;
   background: var(--bgColor) !important;
   transition: background-color $themeTransitionTime ease;
 }
@@ -13,8 +13,8 @@
   justify-content: center;
   margin: 0;
   color: var(--textColor) !important;
-  font-weight: bold;
-  font-size: 22px;
+  font-weight: normal;
+  font-size: 18px;
   text-align: center;
   transition: background-color $themeTransitionTime ease;
 }
@@ -52,7 +52,8 @@
   }
 
   .header-items-txt {
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: normal;
   }
 
   .left-header-items,
