@@ -1,4 +1,4 @@
-$bgColor_light: #F6F5F5;
+$bgColor_light: #f6f5f5;
 $bgColor_dark: #222831;
 
 $fillColor_light: #222831;
@@ -8,25 +8,25 @@ $textColor_light: #222831;
 $textColor_dark: white;
 
 $secondaryTextColor_light: #5e5e5e;
-$secondaryTextColor_dark: #C7C8CC;
+$secondaryTextColor_dark: #c7c8cc;
 
 $borderColor_light: #222831;
 $borderColor_dark: white;
 
-$primaryColor_light: #e65c19;
+$primaryColor_light: #b23b00;
 $primaryColor_dark: #e65c19;
 
-$secondaryColor_light: #0A6847;
-$secondaryColor_dark: #095B3E;
+$secondaryColor_light: #0a6847;
+$secondaryColor_dark: #095b3e;
 
-$inputTextArea_light: #EEEDEB;
-$inputTextArea_dark: #1A1E25;
+$inputTextArea_light: #eeedeb;
+$inputTextArea_dark: #1a1e25;
 
 $inputTextColor_light: #222831;
 $inputTextColor_dark: white;
 
 $inputHintColor_light: #5e5e5e;
-$inputHintColor_dark: #C7C8CC;
+$inputHintColor_dark: #c7c8cc;
 
 // mixin that enables css variables in light mode
 @mixin lighten() {
